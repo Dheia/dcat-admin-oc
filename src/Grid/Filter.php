@@ -87,29 +87,29 @@ class Filter implements Renderable
      * @var array
      */
     protected static $defaultFilters = [
-        'equal'        => Equal::class,
-        'notEqual'     => NotEqual::class,
-        'ilike'        => Ilike::class,
-        'like'         => Like::class,
-        'startWith'    => StartWith::class,
-        'endWith'      => EndWith::class,
-        'gt'           => Gt::class,
-        'lt'           => Lt::class,
-        'ngt'          => Ngt::class,
-        'nlt'          => Nlt::class,
-        'between'      => Between::class,
-        'group'        => Group::class,
-        'where'        => Where::class,
+        'equal' => Equal::class,
+        'notEqual' => NotEqual::class,
+        'ilike' => Ilike::class,
+        'like' => Like::class,
+        'startWith' => StartWith::class,
+        'endWith' => EndWith::class,
+        'gt' => Gt::class,
+        'lt' => Lt::class,
+        'ngt' => Ngt::class,
+        'nlt' => Nlt::class,
+        'between' => Between::class,
+        'group' => Group::class,
+        'where' => Where::class,
         'whereBetween' => WhereBetween::class,
-        'in'           => In::class,
-        'notIn'        => NotIn::class,
-        'date'         => Date::class,
-        'day'          => Day::class,
-        'month'        => Month::class,
-        'year'         => Year::class,
-        'hidden'       => Hidden::class,
-        'newline'      => Newline::class,
-        'findInSet'    => FindInSet::class,
+        'in' => In::class,
+        'notIn' => NotIn::class,
+        'date' => Date::class,
+        'day' => Day::class,
+        'month' => Month::class,
+        'year' => Year::class,
+        'hidden' => Hidden::class,
+        'newline' => Newline::class,
+        'findInSet' => FindInSet::class,
     ];
 
     /**
@@ -157,7 +157,7 @@ class Filter implements Renderable
     /**
      * @var Layout
      */
-    protected $layout;
+    public $layout;
 
     /**
      * Primary key of giving model.
@@ -199,7 +199,7 @@ class Filter implements Renderable
     /**
      * @var string
      */
-    protected $mode = self::MODE_RIGHT_SIDE;
+    protected $mode = self::MODE_PANEL;
 
     protected $conditions;
 
@@ -236,7 +236,7 @@ class Filter implements Renderable
      */
     protected function formatFilterId()
     {
-        return 'filter-box'.Str::random(8);
+        return 'filter-box' . Str::random(8);
     }
 
     /**
@@ -403,7 +403,7 @@ class Filter implements Renderable
     {
         $this->filters = array_filter($this->filters, function (AbstractFilter $filter) use (&$column) {
             if (is_array($column)) {
-                return ! in_array($filter->column(), $column);
+                return !in_array($filter->column(), $column);
             }
 
             return $filter->column() != $column;
@@ -415,14 +415,14 @@ class Filter implements Renderable
      */
     public function inputs()
     {
-        if (! is_null($this->inputs)) {
+        if (!is_null($this->inputs)) {
             return $this->inputs;
         }
 
         $this->inputs = Arr::dot(request()->all());
 
         $this->inputs = array_filter($this->inputs, function ($input) {
-            return $input !== '' && ! is_null($input);
+            return $input !== '' && !is_null($input);
         });
 
         $this->sanitizeInputs($this->inputs);
@@ -460,7 +460,7 @@ class Filter implements Renderable
         }
 
         return tap(array_filter($conditions), function ($conditions) {
-            if (! empty($conditions)) {
+            if (!empty($conditions)) {
                 if ($this->expand === null || $this->mode !== static::MODE_RIGHT_SIDE) {
                     $this->expand();
                 }
@@ -480,7 +480,7 @@ class Filter implements Renderable
      */
     protected function sanitizeInputs(&$inputs)
     {
-        if (! $prefix = $this->grid()->getNamePrefix()) {
+        if (!$prefix = $this->grid()->getNamePrefix()) {
             return;
         }
 
@@ -514,7 +514,7 @@ class Filter implements Renderable
      * @param  AbstractFilter  $filter
      * @return AbstractFilter
      */
-    public function use(AbstractFilter $filter)
+    function use(AbstractFilter $filter)
     {
         return $this->addFilter($filter);
     }
@@ -709,7 +709,7 @@ class Filter implements Renderable
 
         $this->callComposing();
 
-        if (! $this->view) {
+        if (!$this->view) {
             $this->view = $this->mode === static::MODE_RIGHT_SIDE ? 'admin::filter.right-side-container' : 'admin::filter.container';
         }
 
@@ -719,13 +719,13 @@ class Filter implements Renderable
     protected function defaultVariables()
     {
         return [
-            'action'             => $this->action ?: $this->urlWithoutFilters(),
-            'layout'             => $this->layout,
-            'filterID'           => $this->disableCollapse ? '' : $this->filterID,
-            'expand'             => $this->expand,
-            'style'              => $this->style,
-            'border'             => $this->border,
-            'containerClass'     => $this->containerClass,
+            'action' => $this->action ?: $this->urlWithoutFilters(),
+            'layout' => $this->layout,
+            'filterID' => $this->disableCollapse ? '' : $this->filterID,
+            'expand' => $this->expand,
+            'style' => $this->style,
+            'border' => $this->border,
+            'containerClass' => $this->containerClass,
             'disableResetButton' => $this->disableResetButton,
         ];
     }
@@ -776,10 +776,10 @@ class Filter implements Renderable
      */
     public function __call($method, $arguments)
     {
-        if (! empty(static::$supports[$method])) {
+        if (!empty(static::$supports[$method])) {
             $class = static::$supports[$method];
-            if (! is_subclass_of($class, AbstractFilter::class)) {
-                throw new RuntimeException("The class [{$class}] must be a type of ".AbstractFilter::class.'.');
+            if (!is_subclass_of($class, AbstractFilter::class)) {
+                throw new RuntimeException("The class [{$class}] must be a type of " . AbstractFilter::class . '.');
             }
 
             return $this->addFilter(new $class(...$arguments));

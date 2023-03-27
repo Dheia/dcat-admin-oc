@@ -14,7 +14,7 @@ class Text extends Field
     public function __construct($column, $arguments = [])
     {
         if (static::class === self::class) {
-            $this->prepend('<i class="feather icon-edit-2"></i>');
+            #$this->prepend('<i class="feather icon-edit-2"></i>');
         }
 
         parent::__construct($column, $arguments);
@@ -33,7 +33,7 @@ class Text extends Field
         $this->defaultAttribute('type', 'text')
             ->defaultAttribute('name', $this->getElementName())
             ->defaultAttribute('value', $this->value())
-            ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
+            ->defaultAttribute('class', 'form-control ' . $this->getElementClassString())
             ->defaultAttribute('placeholder', $this->placeholder());
 
         $this->addVariables([
@@ -69,10 +69,10 @@ class Text extends Field
         $field = $field instanceof Field ? $field : $this->form->field($field);
         $name = $field->column();
 
-        if ($name.'_confirmation' === $this->column) {
+        if ($name . '_confirmation' === $this->column) {
             $field->rules('confirmed');
         } else {
-            $this->rules('nullable|same:'.$name);
+            $this->rules('nullable|same:' . $name);
         }
 
         $attributes = [
@@ -94,7 +94,7 @@ class Text extends Field
      */
     public function minLength(int $length, ?string $error = null)
     {
-        $this->rules('nullable|min:'.$length);
+        $this->rules('nullable|min:' . $length);
 
         return $this->attribute([
             'data-minlength'       => $length,
@@ -121,7 +121,7 @@ Dcat.validator.extend('maxlength', function ($el) {
 JS
         );
 
-        $this->rules('max:'.$length);
+        $this->rules('max:' . $length);
 
         return $this->attribute([
             'data-maxlength'       => $length,

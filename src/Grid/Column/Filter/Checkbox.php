@@ -29,7 +29,7 @@ JS;
 
     protected function renderCheckbox()
     {
-        if (! $this->shouldDisplay()) {
+        if (!$this->shouldDisplay()) {
             return;
         }
 
@@ -42,16 +42,16 @@ JS;
         $pjaxContainer = Admin::getPjaxContainerId();
 
         return <<<HTML
-&nbsp;<span class="dropdown">
+<span class="dropdown">
 <form action="{$this->formAction()}" {$pjaxContainer} style="display: inline-block;">
     <a href="javascript:void(0);" class="{$active}" data-toggle="dropdown">
         <i class="feather icon-filter"></i>
     </a>
     <ul class="dropdown-menu" role="menu" style="padding: 10px;left: -70px;border-radius: 0;font-weight:normal;background:#fff">
-        
+
         <li>
-            <ul style='padding: 0;'>
-                <li class="dropdown-item" style="margin: 0;padding-left:5px">
+            <ul style="padding: 0;">
+                <li class="dropdown-item">
                     <div class="vs-checkbox-con vs-checkbox-primary checkbox-grid">
                         <input type="checkbox" class="{$this->class['all']}" {$allCheck}>
                         <span class="vs-checkbox"><span class="vs-checkbox--check"><i class="vs-icon feather icon-check"></i></span></span>
@@ -75,7 +75,7 @@ HTML;
             $checked = in_array($key, $value) ? 'checked' : '';
 
             return <<<HTML
-<li style="margin: 0;padding:4px 0 4px 5px">
+<li>
     <div class="vs-checkbox-con vs-checkbox-primary checkbox-grid">
         <input type="checkbox" class="{$this->class['item']}" {$checked} name="{$this->getQueryName()}[]" value="{$key}">
         <span class="vs-checkbox"><span class="vs-checkbox--check"><i class="vs-icon feather icon-check"></i></span></span>

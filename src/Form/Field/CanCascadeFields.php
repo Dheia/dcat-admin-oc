@@ -74,14 +74,14 @@ trait CanCascadeFields
      * @param  mixed  $value
      * @param  \Closure  $closure
      */
-    protected function addDependents(string $operator, $value, \Closure $closure)
+    protected function addDependents(string $operator, $value, \Closure$closure)
     {
         $this->conditions[] = compact('operator', 'value', 'closure');
 
         ($this->parent ?: $this->form)->cascadeGroup($closure, [
             'column' => $this->column(),
-            'index'  => count($this->conditions) - 1,
-            'class'  => $this->getCascadeClass($value, $operator),
+            'index' => count($this->conditions) - 1,
+            'class' => $this->getCascadeClass($value, $operator),
         ]);
     }
 
@@ -116,7 +116,7 @@ trait CanCascadeFields
 
     protected function addCascadeScript()
     {
-        if (! $script = $this->getCascadeScript()) {
+        if (!$script = $this->getCascadeScript()) {
             return;
         }
 
@@ -142,9 +142,9 @@ JS
 
         $cascadeGroups = collect($this->conditions)->map(function ($condition) {
             return [
-                'class'    => $this->getCascadeClass($condition['value'], $condition['operator']),
+                'class' => $this->getCascadeClass($condition['value'], $condition['operator']),
                 'operator' => $condition['operator'],
-                'value'    => $condition['value'],
+                'value' => $condition['value'],
             ];
         })->toJson();
 
@@ -208,11 +208,16 @@ JS
 
         cascade_groups.forEach(function (event) {
             var group = parent.find('div.cascade-group.'+event.class);
+            var groupInput = $('div.cascade-group.'+event.class+' *');
             if (compare(checked, event.value, event.operator)) {
                 group.removeClass('d-none');
+                group.find(':input').attr('disabled', false);
             } else {
                 group.addClass('d-none');
+                group.find(':input').attr('disabled', true);
             }
+            group.find('.has-error').removeClass('has-error');
+
         });
     }).trigger(event);
 })();
@@ -228,6 +233,10 @@ JS;
             case Select::class:
             case MultipleSelect::class:
                 return 'var checked = $(this).val();';
+            case Check::class:
+                return <<<'JS'
+var checked = $(this).closest('.form-group').find(':checked').val();
+JS;
             case Radio::class:
                 return <<<'JS'
 var checked = $(this).closest('.form-group').find(':checked').val();

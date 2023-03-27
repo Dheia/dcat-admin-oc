@@ -109,7 +109,7 @@ abstract class Filter implements Renderable
     public function getQueryName()
     {
         return $this->parent->grid()->makeName(
-            'filter-'.$this->getColumnName()
+            'filter-' . $this->getColumnName()
         );
     }
 
@@ -140,15 +140,18 @@ abstract class Filter implements Renderable
      */
     protected function addResetButton()
     {
+        return;
+
         $value = $this->value();
         if ($value === '' || $value === null) {
             return;
         }
 
-        $style = $this->shouldDisplay() ? 'style=\'margin:3px 14px\'' : '';
+        #$style = $this->shouldDisplay() ? 'style=\'margin:3px 14px\'' : '';
+        $style = '';
 
         return $this->parent->addHeader(
-            "&nbsp;<a class='feather icon-rotate-ccw' href='{$this->urlWithoutFilter()}' {$style}></a>"
+            "<a class='feather icon-rotate-ccw' href='{$this->urlWithoutFilter()}' {$style}></a>"
         );
     }
 

@@ -304,7 +304,7 @@ class Grid
      */
     public function buildable()
     {
-        return ! $this->async || $this->isAsyncRequest();
+        return !$this->async || $this->isAsyncRequest();
     }
 
     /**
@@ -468,7 +468,7 @@ class Grid
      */
     public function build()
     {
-        if (! $this->buildable()) {
+        if (!$this->buildable()) {
             $this->callBuilder();
             $this->handleExportRequest();
 
@@ -507,7 +507,7 @@ class Grid
      */
     public function callBuilder()
     {
-        if ($this->builder && ! $this->built) {
+        if ($this->builder && !$this->built) {
             call_user_func($this->builder, $this);
         }
 
@@ -554,7 +554,7 @@ class Grid
      */
     public function getCreateUrl()
     {
-        return $this->urlWithConstraints($this->resource().'/create');
+        return $this->urlWithConstraints($this->resource() . '/create');
     }
 
     /**
@@ -578,7 +578,7 @@ class Grid
             $queryString = http_build_query($constraints);
         }
 
-        return $url.($queryString ? ('?'.$queryString) : '');
+        return $url . ($queryString ? ('?' . $queryString) : '');
     }
 
     /**
@@ -597,7 +597,7 @@ class Grid
      */
     protected function prependRowSelectorColumn()
     {
-        if (! $this->options['row_selector']) {
+        if (!$this->options['row_selector']) {
             return;
         }
 
@@ -608,7 +608,9 @@ class Grid
             Grid\Column::SELECT_COLUMN_NAME
         )->setLabel($rowSelector->renderHeader())->display(function () use ($rowSelector, $keyName) {
             return $rowSelector->renderColumn($this, $this->{$keyName});
-        });
+        })
+            ->setHeaderAttributes(['class' => 'grid__selector__'])
+            ->setAttributes(['class' => 'grid__selector__']);
     }
 
     /**
@@ -630,7 +632,7 @@ class Grid
      */
     public function renderCreateButton()
     {
-        if (! $this->options['create_button']) {
+        if (!$this->options['create_button']) {
             return '';
         }
 
@@ -692,7 +694,7 @@ class Grid
      */
     public function renderHeader()
     {
-        if (! $this->header) {
+        if (!$this->header) {
             return '';
         }
 
@@ -737,7 +739,7 @@ HTML;
      */
     public function renderFooter()
     {
-        if (! $this->footer) {
+        if (!$this->footer) {
             return '';
         }
 
@@ -784,7 +786,7 @@ HTML;
     {
         $this->tools->disableBatchActions($disable);
 
-        return $this->option('row_selector', ! $disable);
+        return $this->option('row_selector', !$disable);
     }
 
     /**
@@ -794,7 +796,7 @@ HTML;
      */
     public function showRowSelector(bool $val = true)
     {
-        return $this->disableRowSelector(! $val);
+        return $this->disableRowSelector(!$val);
     }
 
     /**
@@ -804,7 +806,7 @@ HTML;
      */
     public function disableCreateButton(bool $disable = true)
     {
-        return $this->option('create_button', ! $disable);
+        return $this->option('create_button', !$disable);
     }
 
     /**
@@ -814,7 +816,7 @@ HTML;
      */
     public function showCreateButton(bool $val = true)
     {
-        return $this->disableCreateButton(! $val);
+        return $this->disableCreateButton(!$val);
     }
 
     /**
@@ -1025,7 +1027,7 @@ HTML;
 
     protected function addScript()
     {
-        if ($this->async && ! $this->isAsyncRequest()) {
+        if ($this->async && !$this->isAsyncRequest()) {
             $query = static::ASYNC_NAME;
             $url = Helper::fullUrlWithoutQuery(['_pjax']);
             $url = Helper::urlWithQuery($url, [static::ASYNC_NAME => 1]);
@@ -1055,13 +1057,13 @@ JS
      */
     protected function doWrap()
     {
-        if (! $this->show) {
+        if (!$this->show) {
             return;
         }
 
         $view = view($this->getView(), $this->variables());
 
-        if (! $wrapper = $this->wrapper) {
+        if (!$wrapper = $this->wrapper) {
             return $view->render();
         }
 

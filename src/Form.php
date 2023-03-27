@@ -100,8 +100,8 @@ class Form implements Renderable
     use Concerns\HasRows;
     use Concerns\HasTabs;
     use Macroable {
-            __call as macroCall;
-        }
+        __call as macroCall;
+    }
 
     /**
      * Remove flag in `has many` form.
@@ -117,6 +117,7 @@ class Form implements Renderable
      */
     protected static $availableFields = [
         'button'              => Field\Button::class,
+        'check'               => Field\Check::class,
         'checkbox'            => Field\Checkbox::class,
         'currency'            => Field\Currency::class,
         'date'                => Field\Date::class,
@@ -637,7 +638,7 @@ class Form implements Renderable
                 return $this->sendResponse($response);
             }
 
-            if (! $id) {
+            if (!$id) {
                 return $this->sendResponse(
                     $this->response()
                         ->error(trans('admin.save_failed'))
@@ -810,7 +811,7 @@ class Form implements Renderable
                 return $this->sendResponse($response);
             }
 
-            if (! $updated) {
+            if (!$updated) {
                 return $this->sendResponse(
                     $this->response()
                         ->error(trans('admin.update_failed'))
@@ -904,7 +905,7 @@ class Form implements Renderable
                 $keyName = $field->getKeyName();
 
                 foreach ($input as $k => &$v) {
-                    if (! array_key_exists($keyName, $v)) {
+                    if (!array_key_exists($keyName, $v)) {
                         $v[$keyName] = $k;
                     }
 
@@ -937,17 +938,17 @@ class Form implements Renderable
                 return false;
             }
 
-            return rtrim($resourcesPath, '/')."/{$key}/edit";
+            return rtrim($resourcesPath, '/') . "/{$key}/edit";
         }
 
         if ($this->request->get('after-save') == 2) {
             // continue creating
-            return rtrim($resourcesPath, '/').'/create';
+            return rtrim($resourcesPath, '/') . '/create';
         }
 
         if ($this->request->get('after-save') == 3) {
             // view resource
-            return rtrim($resourcesPath, '/')."/{$key}";
+            return rtrim($resourcesPath, '/') . "/{$key}";
         }
 
         return $this->request->get(Builder::PREVIOUS_URL_KEY) ?: $this->getCurrentUrl($resourcesPath);
@@ -998,7 +999,7 @@ class Form implements Renderable
             $columns = $field->column();
 
             // If column not in input array data, then continue.
-            if (! Arr::has($updates, $columns) || Arr::has($prepared, $columns)) {
+            if (!Arr::has($updates, $columns) || Arr::has($prepared, $columns)) {
                 continue;
             }
 
@@ -1079,7 +1080,7 @@ class Form implements Renderable
      */
     public function keyName()
     {
-        if (! $this->repository) {
+        if (!$this->repository) {
             return 'id';
         }
 
@@ -1091,7 +1092,7 @@ class Form implements Renderable
      */
     public function createdAtColumn()
     {
-        if (! $this->repository) {
+        if (!$this->repository) {
             return;
         }
 
@@ -1103,7 +1104,7 @@ class Form implements Renderable
      */
     public function updatedAtColumn()
     {
-        if (! $this->repository) {
+        if (!$this->repository) {
             return;
         }
 
@@ -1124,7 +1125,7 @@ class Form implements Renderable
         if (is_array($columns)) {
             $value = [];
             foreach ($columns as $name => $column) {
-                if (! Arr::has($data, $column)) {
+                if (!Arr::has($data, $column)) {
                     continue;
                 }
                 $value[$name] = Arr::get($data, $column);
@@ -1200,7 +1201,7 @@ class Form implements Renderable
     public function fillFields(array $data)
     {
         $this->builder->fields()->each(function (Field $field) use ($data) {
-            if (! in_array($field->column(), $this->ignored, true)) {
+            if (!in_array($field->column(), $this->ignored, true)) {
                 $field->fill($data);
             }
         });
@@ -1232,11 +1233,11 @@ class Form implements Renderable
 
         /** @var Field $field */
         foreach ($this->builder->fields() as $field) {
-            if (! $validator = $field->getValidator($input)) {
+            if (!$validator = $field->getValidator($input)) {
                 continue;
             }
 
-            if (($validator instanceof Validator) && ! $validator->passes()) {
+            if (($validator instanceof Validator) && !$validator->passes()) {
                 $failedValidators[] = [$field, $validator];
             }
         }
@@ -1261,11 +1262,11 @@ class Form implements Renderable
             return $this->responseValidationMessages($column->getMessageBag()->getMessages());
         }
 
-        if (! $this->validationMessages) {
+        if (!$this->validationMessages) {
             $this->validationMessages = new MessageBag();
         }
 
-        if (! $column) {
+        if (!$column) {
             return $this;
         }
 
@@ -1391,7 +1392,7 @@ class Form implements Renderable
             return $this;
         }
 
-        if (! is_array($callback)) {
+        if (!is_array($callback)) {
             $callback = [$callback];
         }
 
@@ -1697,7 +1698,7 @@ class Form implements Renderable
      */
     public function inDialog(\Closure $callback = null)
     {
-        if (! $callback) {
+        if (!$callback) {
             return DialogForm::is();
         }
 

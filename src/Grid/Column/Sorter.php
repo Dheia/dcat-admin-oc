@@ -90,7 +90,7 @@ class Sorter implements Renderable
             $sort['cast'] = $this->cast;
         }
 
-        if (! $this->isSorted() || $this->sort['type'] != 'asc') {
+        if (!$this->isSorted() || $this->sort['type'] != 'asc') {
             $url = request()->fullUrlWithQuery([
                 $this->getSortName() => $sort,
             ]);
@@ -100,6 +100,6 @@ class Sorter implements Renderable
             ]);
         }
 
-        return "&nbsp;<a href='{$url}' class='grid-sort feather icon-arrow-{$icon} {$active}'></a>";
+        return "<a href='{$url}' class='grid-sort feather icon-arrow-{$icon} {$active}'></a>";
     }
 }

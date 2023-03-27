@@ -83,12 +83,12 @@ trait HasHeader
     {
         $valueKey = is_string($filter) || $filter instanceof \Closure ? $filter : null;
 
-        if (! $filter || $valueKey) {
+        if (!$filter || $valueKey) {
             $filter = Grid\Column\Filter\Equal::make()->valueFilter($valueKey);
         }
 
-        if (! $filter instanceof Grid\Column\Filter) {
-            throw new RuntimeException('The "$filter" must be a type of '.Grid\Column\Filter::class.'.');
+        if (!$filter instanceof Grid\Column\Filter) {
+            throw new RuntimeException('The "$filter" must be a type of ' . Grid\Column\Filter::class . '.');
         }
 
         return $this->addHeader($filter);
@@ -139,7 +139,7 @@ trait HasHeader
      */
     public function renderHeader()
     {
-        if (! $this->headers) {
+        if (!$this->headers) {
             return '';
         }
         $headers = implode(

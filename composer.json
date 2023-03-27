@@ -2,7 +2,14 @@
     "name": "dcat/laravel-admin",
     "description": "dcat admin",
     "type": "library",
-    "keywords": ["dcat", "laravel", "admin", "grid", "form", "laravel admin"],
+    "keywords": [
+        "dcat",
+        "laravel",
+        "admin",
+        "grid",
+        "form",
+        "laravel admin"
+    ],
     "homepage": "https://github.com/jqhph/dcat-admin",
     "license": "MIT",
     "authors": [
@@ -15,7 +22,8 @@
         "php": ">=7.1.0",
         "laravel/framework": "~5.5|~6.0|~7.0|~8.0|~9.0",
         "spatie/eloquent-sortable": "3.*|4.*",
-        "doctrine/dbal": "^2.6|^3.0"
+        "doctrine/dbal": "^2.6|^3.0",
+        "dcat/easy-excel": "^1.0"
     },
     "require-dev": {
         "laravel/dusk": "~5.9|~6",

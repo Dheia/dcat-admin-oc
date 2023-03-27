@@ -58,7 +58,7 @@ class Tools implements Renderable
     protected function appendDefaultTools()
     {
         $this->append($this->makeBatchActions())
-            ->append(new RefreshButton())
+        #->append(new RefreshButton())
             ->append(new FilterButton());
     }
 
@@ -115,7 +115,7 @@ class Tools implements Renderable
      */
     public function has()
     {
-        return ! $this->tools->isEmpty();
+        return !$this->tools->isEmpty();
     }
 
     /**
@@ -154,7 +154,7 @@ class Tools implements Renderable
     {
         $this->tools = $this->tools->map(function ($tool) use ($disable) {
             if ($tool instanceof RefreshButton) {
-                return $tool->display(! $disable);
+                return $tool->display(!$disable);
             }
 
             return $tool;
@@ -193,7 +193,7 @@ class Tools implements Renderable
             return;
         }
 
-        if (! is_array($value)) {
+        if (!is_array($value)) {
             $value = [$value];
         }
 
@@ -210,7 +210,7 @@ class Tools implements Renderable
     public function render()
     {
         $value = $this->tools->map(function ($tool) {
-            if ($tool instanceof Action && ! $tool->allowed()) {
+            if ($tool instanceof Action && !$tool->allowed()) {
                 return;
             }
 
@@ -235,7 +235,7 @@ class Tools implements Renderable
      */
     protected function addButtonOutline($value)
     {
-        if (! $this->outline) {
+        if (!$this->outline) {
             return $value;
         }
 
@@ -244,7 +244,7 @@ class Tools implements Renderable
 
             if (
                 in_array('btn', $class, true)
-                && ! in_array('disable-outline', $class, true)
+                && !in_array('disable-outline', $class, true)
                 && Str::contains($text[1], 'btn-')
             ) {
                 $class[] = 'btn-outline';
